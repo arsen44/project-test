@@ -19,7 +19,6 @@ EVENT_LOG_COLUMNS = [
     'environment',
     'event_context',
     'metadata_version',
-    'is_processed',  # Добавляем поле для отслеживания статуса обработки
 ]
 
 
@@ -80,7 +79,6 @@ class EventLogClient:
                 'environment': settings.ENVIRONMENT,
                 'event_context': event.model_dump_json(),
                 'metadata_version': 1,  # Укажите версию метаданных
-                'is_processed': 0,  # Установите по умолчанию как "не обработано"
             }
             for event in data
         ]
@@ -115,7 +113,7 @@ class EventLogClient:
             # Вставляем пакет в основную таблицу
             self._client.insert(
                 data=batch,
-                column_names=EVENT_LOG_COLUMNS[:-1],  # Исключаем is_processed
+                column_names=EVENT_LOG_COLUMNS,
                 database=settings.CLICKHOUSE_SCHEMA,
                 table=settings.CLICKHOUSE_EVENT_LOG_TABLE_NAME,
             )

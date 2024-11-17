@@ -5,6 +5,6 @@ from clickhouse_connect.driver import Client
 
 @pytest.fixture(scope='module')
 def f_ch_client() -> Client:
-    client = clickhouse_connect.get_client(host='clickhouse')
+    client = clickhouse_connect.get_client(host='localhost')
     yield client
     client.close()

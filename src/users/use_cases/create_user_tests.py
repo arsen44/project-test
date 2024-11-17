@@ -46,11 +46,11 @@ def test_emails_are_unique(f_use_case: CreateUser) -> None:
 
 
 def test_event_log_entry_published(
-    f_use_case: CreateUser,
+    f_use_case: CreateUser ,
     f_ch_client: Client,
 ) -> None:
     email = f'test_{uuid.uuid4()}@email.com'
-    request = CreateUserRequest(
+    request = CreateUserRequest(  # Исправлено: используем CreateUserRequest вместо CreateUser
         email=email, first_name='Test', last_name='Testovich',
     )
 
